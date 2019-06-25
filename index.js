@@ -70,7 +70,7 @@ server.post('/pomoLogin',(req,res)=>{
             console.log(req.body.email);
             console.log(req.body.UId);
             if(doc[0]){
-                res.send(doc[0])
+                 res.send(doc[0])
             }
             else{
                 console.log("No such User,Create New");
@@ -95,14 +95,28 @@ server.post('/pomoAddTasks',(req,res)=>{
             if(doc){
             console.log("This is the data of person",doc);
             res.send("Already exist");
-            let tasks = new Tasks();
-            tasks.taskTitle = req.body.task;
-            tasks.taskPomoAsgn = req.body.taskPomoNum;
-            tasks.taskDate = req.body.taskDate;
-            tasks.userAsgn = doc._id;
-            tasks.save();
-            console.log("This is docs of tasks",tasks);
-            }
+            Tasks.findOne({'taskTitle':req.body.task},{'userAsgn':doc._id},(err,Tdoc)=>{
+                if(err){
+                    console.log("Task Err of New")
+                }
+                else{
+                    if(Tdoc){
+                        console.log("Task Exist")
+                        console.log(Tdoc)
+                    }
+                    else{
+                        let tasks = new Tasks();
+                        tasks.taskTitle = req.body.task;
+                        tasks.taskPomoAsgn = req.body.taskPomoNum;
+                        tasks.taskDate = req.body.taskDate;
+                        tasks.userAsgn = doc._id;
+                        tasks.save();
+                        console.log("This is docs of tasks",tasks);
+                        }
+                        
+                    }
+                })
+        }
             else{
                 res.send("Doesnot Exist and Created New");
             }
@@ -117,7 +131,7 @@ server.post('/pomoTasks',(req,res)=>{
         }
         else{
             console.log("This is the User",doc)
-            if(doc[0]!==''){
+            if(doc){
                 Tasks.find({'userAsgn':doc._id},(err,doc)=>{
                     if(err){
                         console.log("Error of Tasks")
@@ -134,8 +148,35 @@ server.post('/pomoTasks',(req,res)=>{
 
 
 
-// server.put('/updatePomo/:id',(req,res)=>{
-//     Tasks.findOneAndUpdate({'_id':req.params.id},(err,doc)=>{
-//         console.log(req.body);
-//     })
-// })
+server.put('/updatePomo',(req,res)=>{
+    Tasks.findOne({'taskTitle':req.body.taskTitle},(err,doc)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            console.log(doc)
+            console.log(req.body);
+            Tasks.findOneAndUpdate({'taskTitle':req.body.taskTitle},{'taskPomoAsgn':req.body.taskPomoAsgn},(err,doc)=>{
+                if(err){
+                    console.log(err)
+                }
+                else{
+                    console.log(doc)
+                }
+            })
+            console.log("Updating the Value of Pomo")
+        }
+    })
+})
+
+server.delete('/deleteCompTasks',(req,res)=>{
+    Tasks.findOneAndDelete({'taskTitle':req.body.taskTitle},(err,doc)=>{
+        if(err){
+            console.log("Deletion Error",err);
+        }
+        else{
+            console.log("Delted data",doc);
+            
+        }
+    })
+})
