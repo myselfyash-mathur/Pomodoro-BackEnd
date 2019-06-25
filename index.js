@@ -61,60 +61,81 @@ server.listen(8080,()=>{
 // })
 
 server.post('/pomoLogin',(req,res)=>{
-   Users.find({'email':req.body.EmailId},(err,doc)=>{
+   Users.find({'email':req.body.email},(err,doc)=>{
        if(err){
            console.log(err)
        }
        else{
-           console.log(req.body.EmailId);
-           console.log(req.body.password);
-           console.log(doc);
-           if(doc[0].password===req.body.password){
-               var sess = req.session
-               console.log(sess);
-               sess.userName = doc[0].name;
-               sess.userId = doc[0]._id;
-               console.log(sess.userName,sess.userId);
-               res.redirect('http://localhost:3000/logged/');
+            console.log(req.body.name);
+            console.log(req.body.email);
+            console.log(req.body.UId);
+            if(doc[0]){
+                res.send(doc[0])
+            }
+            else{
+                console.log("No such User,Create New");
+                 let nUser = new Users();
+                 nUser.name = req.body.name;
+                 nUser.email = req.body.email;
+                 console.log("Created");
+                 nUser.save();
+            }
            }
-           else{
-               res.send("Wrong Id/Password");
-           }
-            
-            
-       }
+        
    })
       
 })
 server.post('/pomoAddTasks',(req,res)=>{
-    console.log(req.body);
-    let User = new Users();
+    console.log("This is recived",req.body);
     Users.findOne({'email':req.body.email},(err,doc)=>{
         if(err){
             console.log(err);
         }
         else{
-            console.log(doc[0]);
+            if(doc){
+            console.log("This is the data of person",doc);
             res.send("Already exist");
             let tasks = new Tasks();
             tasks.taskTitle = req.body.task;
             tasks.taskPomoAsgn = req.body.taskPomoNum;
             tasks.taskDate = req.body.taskDate;
-            tasks.userAsgn = User._id;
+            tasks.userAsgn = doc._id;
             tasks.save();
+            console.log("This is docs of tasks",tasks);
+            }
+            else{
+                res.send("Doesnot Exist and Created New");
+            }
+        }
+    })
+})
+
+server.post('/pomoTasks',(req,res)=>{
+    Users.findOne({'email':req.body.email},(err,doc)=>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            console.log("This is the User",doc)
+            if(doc[0]!==''){
+                Tasks.find({'userAsgn':doc._id},(err,doc)=>{
+                    if(err){
+                        console.log("Error of Tasks")
+                    }
+                    else{
+                        res.send(doc);
+                    }
+                })
+            }
         }
     })
 })
 
 
-server.get('/pomoTasks',(req,res)=>{
-        Tasks.find((err,doc)=>{
-            if(err){
-                console.log(err)
-            }
-            else{
-                res.send(doc)
-            }
-        })
-    
-})
+
+
+// server.put('/updatePomo/:id',(req,res)=>{
+//     Tasks.findOneAndUpdate({'_id':req.params.id},(err,doc)=>{
+//         console.log(req.body);
+//     })
+// })
