@@ -156,6 +156,7 @@ server.put('/updatePomo',(req,res)=>{
         else{
             console.log(doc)
             console.log(req.body);
+            mongoose.set('useFindAndModify', false);
             Tasks.findOneAndUpdate({'taskTitle':req.body.taskTitle},{'taskPomoAsgn':req.body.taskPomoAsgn},(err,doc)=>{
                 if(err){
                     console.log(err)
@@ -175,8 +176,9 @@ server.delete('/deleteCompTasks',(req,res)=>{
             console.log("Deletion Error",err);
         }
         else{
+            console.log(req.body)
             console.log("Delted data",doc);
-            
+
         }
     })
 })
