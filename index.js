@@ -170,15 +170,14 @@ server.put('/updatePomo',(req,res)=>{
     })
 })
 
-server.delete('/deleteCompTasks',(req,res)=>{
-    Tasks.findOneAndDelete({'taskTitle':req.body.taskTitle},(err,doc)=>{
+server.delete('/deleteCompTasks/:taskTitle',(req,res)=>{
+    console.log("Data Came",req.params)
+    Tasks.findOneAndDelete({'taskTitle':req.params.taskTitle},(err,doc)=>{
         if(err){
             console.log("Deletion Error",err);
         }
         else{
-            console.log(req.body)
             console.log("Delted data",doc);
-
         }
     })
 })
