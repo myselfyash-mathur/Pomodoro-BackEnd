@@ -177,7 +177,7 @@ server.delete('/deleteCompTasks/:taskTitle',(req,res)=>{
             console.log("Deletion Error",err);
         }
         else{
-            console.log("Delted data",doc);
+            console.log("Deleted data",doc);
         }
     })
 })
