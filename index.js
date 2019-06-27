@@ -7,7 +7,7 @@ const cors = require("cors");
 const dataModels = require('./dataModels.js');
 let Users = dataModels.Users;
 let Tasks = dataModels.Tasks;
-
+server.use(express.static('build'));
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({extended:false}));
 server.use(cors());
@@ -19,17 +19,15 @@ server.use(session({
     saveUninitialized: false,
     cookie: { secure: false }
 }))
-mongoose.connect('mongodb://localhost:27017/pomodorodb',{useNewUrlParser:true},(err)=>{
-    if(err){
-        console.log(err);
-    }
-    else{
-        console.log("Database Connected");
-    }
-});
+mongoose.connect('mongodb+srv://yashmthr_98:this.is_mydb.1411@pomodoro-cecir.mongodb.net',{dbName:'pomodorodb',useNewUrlParser:true}).then(()=>{
+    console.log("Hosted Database Connected");
+}).catch((error)=>{
+    console.log("Hosted Database Connection Failed")
+    console.log(error);
+})
 // let users = new Users()
 // let tasks = new Tasks()
-server.listen(8080,()=>{
+server.listen(process.env.PORT,()=>{
     console.log("Server Started");
 })
 // server.get("/demo",(req,res)=>{

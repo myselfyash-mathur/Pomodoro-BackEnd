@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/static/css/main.0a94a5ad.chunk.css",
+    "main.js": "/static/js/main.77de0f01.chunk.js",
+    "main.js.map": "/static/js/main.77de0f01.chunk.js.map",
+    "runtime~main.js": "/static/js/runtime~main.a8a9905a.js",
+    "runtime~main.js.map": "/static/js/runtime~main.a8a9905a.js.map",
+    "static/css/2.355e9762.chunk.css": "/static/css/2.355e9762.chunk.css",
+    "static/js/2.a4b06c72.chunk.js": "/static/js/2.a4b06c72.chunk.js",
+    "static/js/2.a4b06c72.chunk.js.map": "/static/js/2.a4b06c72.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.a4b36390cb6f4c75414fe619f64b75bd.js": "/precache-manifest.a4b36390cb6f4c75414fe619f64b75bd.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.355e9762.chunk.css.map": "/static/css/2.355e9762.chunk.css.map",
+    "static/css/main.0a94a5ad.chunk.css.map": "/static/css/main.0a94a5ad.chunk.css.map",
+    "static/media/bellRing.mp3": "/static/media/bellRing.7dfaf8e6.mp3",
+    "static/media/pomodoro-icon.png": "/static/media/pomodoro-icon.46ed42f1.png",
+    "static/media/pomodoro-technique.svg": "/static/media/pomodoro-technique.50ea7899.svg"
+  }
+}
